@@ -1,0 +1,8 @@
+site_name: Rubber Duck Code Challenge
+pages:
+    - Home: index.md
+    - Adding Activity: adding_activity.md
+    - Viewing Activity: viewing_activity.md
+    - Scoring: scoring.md
+    - Slack Integration: slack_integration.md
+theme: readthedocs

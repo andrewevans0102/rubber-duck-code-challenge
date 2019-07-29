@@ -11,7 +11,10 @@
     "functions-install": "cd functions; npm install",
     "prod-deploy": "firebase deploy",
     "staged-commit": "./scripts/staged-commit.sh",
-    "deploy-commit": "./scripts/deploy-commit.sh"
+    "deploy-commit": "./scripts/deploy-commit.sh",
+    "docs-build": "cd docs; mkdocs build",
+    "docs-deploy": "cd docs; mkdocs gh-deploy -m \"[ci skip]\"",
+    "docs-serve": "cd docs; mkdocs serve"
   },
   "private": true,
   "dependencies": {

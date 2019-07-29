@@ -51,3 +51,6 @@ functions/package-lock.json
 
 # env files
 functions/.env
+
+# MkDocs
+docs/site
