@@ -56,7 +56,7 @@ export class CreateActivityComponent implements OnInit {
     const idSaved = this.afs.createId();
     // this could potentially move to a table later
     let aPoints = 0;
-    switch(this.createForm.controls.activity.value) {
+    switch (this.createForm.controls.activity.value) {
       case 'Read Article':
         aPoints = 10;
         break;
