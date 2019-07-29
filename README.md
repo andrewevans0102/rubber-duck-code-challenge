@@ -1,5 +1,7 @@
 # rubber-duck-code-challenge
 
+![rubber duck](https://github.com/andrewevans0102/rubber-duck-code-challenge/blob/master/src/assets/rubber_duck.png)
+
 This project attempts to make learning fun.  
 
 The hosted application can be reached here.
@@ -10,11 +12,17 @@ Project was originally developec as a clone of my earlier project [overwatch-cha
 
 If you hae any other questions, please contact [Andrew here](https://www.andrewevans.dev/contact)
 
+Rubber Duck image is [from here](https://www.iconfinder.com/icons/416395/bath_bathroom_clean_duck_kids_rubber_water_icon).
+
 ## npm scripts
 - `prod-deploy` deploys frontend and functions to Firebase
 - `staged-commit` sets environment values beofre making project commit
 - `deploy-commit` pulls in production values for development work
 - `functions-install` does the standard `npm install` for functions
+
+## project folders
+- `functions` contains the Firebase functions
+- `scripts` contains build scripts for development
 
 ## Firebase
 The project uses the Firebase SDK and AngularFire2 for authentication and database services.
