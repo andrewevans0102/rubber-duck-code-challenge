@@ -11,6 +11,11 @@ describe('ViewActivityComponent', () => {
   let component: ViewActivityComponent;
   let fixture: ComponentFixture<ViewActivityComponent>;
 
+  // stub response from AngularFiresoreModule GET call
+  const querySnapshot = {
+    forEach: () => null
+  };
+
   // stub for instance of the AngularFirestore class
   const firestoreStub = {
     collection: (name: string) => ({
@@ -19,6 +24,13 @@ describe('ViewActivityComponent', () => {
         valueChanges: () => new BehaviorSubject({ foo: 'bar' }),
         set: (d: any) => new Promise((resolve, reject) => resolve()),
       }),
+      ref: {
+        get: () => new Promise((resolve, reject) => resolve(querySnapshot)),
+        doc: (id: string) => ({
+          get: () => new Promise((resolve, reject) => resolve()),
+          set: (value: any) => new Promise((resolve, reject) => resolve())
+        })
+      }
     }),
   };
 
