@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "functions-install": "cd functions; npm run install",
+    "functions-install": "cd functions; npm install",
     "prod-deploy": "firebase deploy",
     "staged-commit": "./scripts/staged-commit.sh",
     "deploy-commit": "./scripts/deploy-commit.sh"
