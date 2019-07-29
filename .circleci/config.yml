@@ -34,7 +34,7 @@ jobs:
                 command: npm run lint
             - run:
                 name: Testing
-                command: npm run test
+                command: npm run prod-test
             - run:
                 name: e2e Testing
                 command: npm run prod-cypress
