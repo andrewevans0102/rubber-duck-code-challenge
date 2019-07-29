@@ -1,0 +1,73 @@
+<mat-toolbar>
+  <span>Overwatch Challenge</span>
+  <span class="toolbar-space"></span>
+  <span>
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item (click)="createActivity()">
+        <mat-icon>assignment</mat-icon>
+        <span>Create Activity</span>
+      </button>
+      <button mat-menu-item (click)="viewActivity()">
+        <mat-icon>camera_roll</mat-icon>
+        <span>View Activity</span>
+      </button>
+      <button mat-menu-item (click)="viewHighScores()">
+        <mat-icon>score</mat-icon>
+        <span>View High Scores</span>
+      </button>
+      <button *ngIf="admin" mat-menu-item (click)="clearScores()">
+        <mat-icon>check_box</mat-icon>
+        <span>clear scores</span>
+      </button>
+      <button *ngIf="admin" mat-menu-item (click)="viewAdmin()">
+        <mat-icon>build</mat-icon>
+        <span>View Admin</span>
+      </button>
+      <button mat-menu-item>
+        <a href="https://andrewevans0102.github.io/overwatch-challenge/" class="view-guide">
+          <mat-icon>assignment</mat-icon>
+          <span>View Guide</span>
+        </a>
+      </button>
+      <button mat-menu-item>
+        <a href="{{joinSlack}}" class="view-guide">
+          <i class="fab fa-slack fa-2x slack-link"></i>
+          <span>Register Slack</span>
+        </a>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </span>
+</mat-toolbar>
+<div class="top-page">
+  <img src="../../../assets/rubber_duck.png" class="rubber-duck">
+  <h1 *ngIf="firstName !== undefined" id="welcome-title">Welcome {{ firstName }}!</h1>
+  <img src="../../../assets/rubber_duck.png" class="rubber-duck">
+</div>
+<table class="table table-dark" *ngIf="showSpinner === false">
+  <thead>
+    <tr>
+      <th scope="col">Place</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let userScore of scores">
+      <td>{{ userScore.place }}</td>
+      <td>{{ userScore.firstName }}</td>
+      <td>{{ userScore.lastName }}</td>
+      <td>{{ userScore.score }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="show-spinner">
+  <i *ngIf="showSpinner === true" class="fas fa-cog fa-spin fa-10x"></i>
+</div>

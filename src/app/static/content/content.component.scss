@@ -1,0 +1,103 @@
+.toolbar-space {
+  flex: 1 1 auto;
+}
+
+.content-parent {
+  display: flex;
+  flex-direction: column;
+  border: solid;
+}
+
+.content-child {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border: solid;
+}
+
+.person {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10em;
+  font-size: 2em;
+}
+
+.activities {
+  display: flex;
+  border-left: solid;
+  flex-direction: column;
+}
+
+.delete-button {
+  color: red;
+  margin-left: 2em;
+}
+
+li {
+  height: 2em;
+  margin: 1em;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
+
+.top-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5em;
+}
+
+.rubber-duck {
+  width: 5em;
+  height: 5em;
+  margin: 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.view-guide {
+  color: white;
+}
+
+mat-toolbar {
+  background-color: #ffc107;
+  color: blue;
+}
+
+button {
+  background-color: #ffc107;
+  color: blue;
+}
+
+.duck-menu {
+  background-color: #ffc107;
+  color: blue;
+}
+
+.slack-link {
+  padding-right: .60em;
+}
+
+.menu-button {
+  background-color: #ffc107;
+}
+
+.show-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gold;
+}

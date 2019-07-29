@@ -1,0 +1,41 @@
+.warn {
+  color: #F44336;
+  margin: 1em;
+  text-align: center;
+}
+
+.info {
+  color: #2196F3;
+  margin: 1em;
+}
+
+.link {
+  color: gold;
+  margin: 1em;
+  font-style: italic;
+  font-family: 'Lucida Console, Monaco, monospace';
+  font-size: 1.5em;
+}
+
+.link-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-dialog-content ::ng-deep {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 1em;
+  border-radius: 2em;
+}
+
+.popup-container {
+  margin: 1em;
+}
+
+.close-button {
+  background-color: red;
+}

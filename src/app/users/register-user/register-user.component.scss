@@ -1,0 +1,25 @@
+.create-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+  max-width: 40em;
+}
+
+.create-container > * {
+  width: 100%;
+}
+
+.cancel-button {
+  margin-top: 1em;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

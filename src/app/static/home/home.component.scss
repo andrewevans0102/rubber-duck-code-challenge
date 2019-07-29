@@ -1,0 +1,56 @@
+.button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: gold;
+  text-align: center;
+  margin: 2em;
+}
+
+.info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 2em;
+  max-width: 40em;
+}
+
+.rubber-duck {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+}
+
+h1 {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+a {
+  margin: 0;
+  color: darkblue;
+}
+
+.home-button {
+  width: 10em;
+  height: 4em;
+}
+
+.info-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-button {
+  background-color: gold;
+  color: blue;
+}

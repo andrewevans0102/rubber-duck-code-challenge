@@ -1,0 +1,16 @@
+<div class="popup-container">
+  <h1 mat-dialog-title>Rubber Duck Code Challenge</h1>
+  <div mat-dialog-content *ngIf="data.warn !== null" class="warn">
+    {{ data.warn }}
+  </div>
+  <div mat-dialog-content *ngIf="data.info !== null" class="info">
+    {{ data.info }}
+  </div>
+  <div class="link-parent">
+    <a href="{{data.linkHref}}" *ngIf="data.linkHref !== null" class="link">{{ data.linkText }}</a>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button class="close-button" (click)="closeClick()" id="closeButton">Close</button>
+  </div>
+</div>
+
