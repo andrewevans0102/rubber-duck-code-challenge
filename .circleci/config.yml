@@ -3,7 +3,7 @@ jobs:
     build:
         working_directory: ~/project
         docker:
-            - image: circleci/node:10.9.0-jessie
+            - image: circleci/node:10.9.0-jessie/browsers
         steps:
             - checkout
             - run:
@@ -53,7 +53,7 @@ jobs:
 
     deploy:
         docker:
-            - image: circleci/node:10.9.0-jessie
+            - image: circleci/node:10.9.0-jessie/browsers
         working_directory: ~/project
         steps:
             - run:
