@@ -1,3 +1,4 @@
+// tslint:disable: no-trailing-whitespace
 export const environment = {
     production: true,
     firebase: {
