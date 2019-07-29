@@ -20,7 +20,7 @@ jobs:
                     - v1-dependencies-{{ checksum "package.json" }}
             - run:
                 name: Install dependencies
-                command: npm run frontend-install
+                command: npm install
             # - run:
             #     name: Cypress Install
             #     command: npm run frontend-cypress-install
