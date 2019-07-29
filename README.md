@@ -53,5 +53,4 @@ There are links to join the slack org available inside the application once you 
 
 ## Outstanding Tasks
 - add e2e testing with [Cypress](https://www.cypress.io/)
-- add unit testing with [Jest](https://jestjs.io/)
-- create docs with [MkDocs](https://www.mkdocs.org/)
+- increase unit test coverage (Karma)

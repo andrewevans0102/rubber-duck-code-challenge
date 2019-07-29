@@ -14,7 +14,9 @@
     "deploy-commit": "./scripts/deploy-commit.sh",
     "docs-build": "cd docs; mkdocs build",
     "docs-deploy": "cd docs; mkdocs gh-deploy -m \"[ci skip]\"",
-    "docs-serve": "cd docs; mkdocs serve"
+    "docs-serve": "cd docs; mkdocs serve",
+    "code-coverage": "ng test --code-coverage --watch=true",
+    "prod-test": "ng test --watch=false"
   },
   "private": true,
   "dependencies": {
