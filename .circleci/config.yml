@@ -45,7 +45,7 @@ jobs:
                 key: v1-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
                 paths:
                     # - frontend
-                    # - functions
+                    - functions
                     - dst/rubber-duck-code-challenge/
                     - package.json
                     - .firebaserc
