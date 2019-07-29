@@ -3,19 +3,19 @@
   <span class="toolbar-space"></span>
   <span>
     <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
+      <mat-icon id="rdcc-toolbar">menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu" [overlapTrigger]="false">
       <button mat-menu-item (click)="createActivity()">
         <mat-icon>assignment</mat-icon>
         <span>Create Activity</span>
       </button>
-      <button mat-menu-item (click)="viewActivity()">
+      <button mat-menu-item id="view-activity" (click)="viewActivity()">
         <mat-icon>camera_roll</mat-icon>
         <span>View Activity</span>
       </button>
       <button mat-menu-item (click)="viewHighScores()">
-        <mat-icon>score</mat-icon>
+        <mat-icon id="high-scores">score</mat-icon>
         <span>View High Scores</span>
       </button>
       <button *ngIf="admin" mat-menu-item (click)="clearScores()">
@@ -27,7 +27,7 @@
         <span>View Admin</span>
       </button>
       <button mat-menu-item>
-        <a href="https://andrewevans0102.github.io/overwatch-challenge/" class="view-guide">
+        <a href="https://andrewevans0102.github.io/rubber-duck-code-challenge/" class="view-guide">
           <mat-icon>assignment</mat-icon>
           <span>View Guide</span>
         </a>

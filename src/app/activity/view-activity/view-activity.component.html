@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let activity of teamActivity | async">
+    <tr *ngFor="let activity of teamActivity">
       <td>{{ activity.firstName }}</td>
       <td>{{ activity.lastName }}</td>
       <td><a href="{{ activity.link }}">{{ activity.activity }}</a></td>

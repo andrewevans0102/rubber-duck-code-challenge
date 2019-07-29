@@ -14,10 +14,10 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Description" formControlName="description" required>
+      <input matInput id="description" placeholder="Description" formControlName="description" required>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Activity Link" formControlName="link" required>
+      <input matInput id="link" placeholder="Activity Link" formControlName="link" required>
     </mat-form-field>
     <mat-error *ngIf="createForm.hasError('required')">activity, description, link, and points are required</mat-error>
     <div class="button-container">

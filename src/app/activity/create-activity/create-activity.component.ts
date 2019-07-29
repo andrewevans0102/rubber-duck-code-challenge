@@ -94,7 +94,8 @@ export class CreateActivityComponent implements OnInit {
       link: this.createForm.controls.link.value,
       points: aPoints,
       id: idSaved,
-      cleared: false
+      cleared: false,
+      recorded: Date.now()
     };
 
     // save to the activity table for display
@@ -117,6 +118,7 @@ export class CreateActivityComponent implements OnInit {
         return this.errorPopup(error.message);
       });
 
+    this.infoPopup('activity was created successfully');
     this.router.navigateByUrl('/content');
   }
 
@@ -128,6 +130,16 @@ export class CreateActivityComponent implements OnInit {
     const popupModalData = {
       warn: message,
       info: null,
+      linkHref: null,
+      linkText: null
+    };
+    return this.popupService.openDialog(popupModalData);
+  }
+
+  infoPopup(message: string) {
+    const popupModalData: PopupModalData = {
+      warn: null,
+      info: message,
       linkHref: null,
       linkText: null
     };

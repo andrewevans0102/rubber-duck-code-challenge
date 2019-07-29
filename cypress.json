@@ -1,0 +1,11 @@
+{
+  "baseUrl": "",
+  "env": {
+    "cypress-email": "",
+    "cypress-password": "",
+    "cypress-user-first-name": "",
+    "cypress-user-last-name": "",
+    "activity-description": "",
+    "activity-link": ""
+  }
+}
