@@ -6,7 +6,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "dist",
+    "public": "dist/rubber-duck-code-challenge",
     "ignore": [
       "firebase.json",
       "**/.*",
