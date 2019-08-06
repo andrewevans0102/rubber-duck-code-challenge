@@ -54,3 +54,5 @@ functions/.env
 
 # MkDocs
 docs/site
+
+functions/permissions.json

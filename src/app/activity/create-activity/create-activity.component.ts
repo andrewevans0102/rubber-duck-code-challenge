@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data';
-import { PopupService } from 'src/app/services/popup.service';
+import { PopupService } from 'src/app/services/popup/popup.service';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { Activity } from 'src/app/models/activity/activity';
+import { User } from 'src/app/models/user/user';
 
 @Component({
   selector: 'app-create-activity',
@@ -26,7 +28,7 @@ export class CreateActivityComponent implements OnInit {
   admin: boolean;
 
   constructor(
-    public afs: AngularFirestore,
+    public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
     public popupService: PopupService) { }
@@ -34,92 +36,85 @@ export class CreateActivityComponent implements OnInit {
   ngOnInit() {
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
-        this.selectUser(user.uid);
+        this.db.readUser(user.uid).then((response: any) => {
+          this.firstName = response.firstName;
+          this.lastName = response.lastName;
+          this.score = response.score;
+          this.admin = response.admin;
+        });
       }
     });
   }
 
-  async selectUser(uid: string) {
-    await this.afs.collection('users').ref.doc(uid).get()
-      .then((documentSnapshot) => {
-        this.firstName = documentSnapshot.data().firstName;
-        this.lastName = documentSnapshot.data().lastName;
-        this.score = documentSnapshot.data().score;
-        this.admin = documentSnapshot.data().admin;
-      })
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
-  }
-
   async createActivity() {
-    const idSaved = this.afs.createId();
-    // this could potentially move to a table later
-    let aPoints = 0;
-    switch (this.createForm.controls.activity.value) {
-      case 'Read Article':
-        aPoints = 10;
-        break;
-      case 'Wrote Blog Post':
-        aPoints = 50;
-        break;
-      case 'Listened to Podcast':
-        aPoints = 10;
-        break;
-      case 'Watched Video':
-        aPoints = 10;
-        break;
-      case 'Attended Lecture':
-        aPoints = 20;
-        break;
-      case 'Built Hello World App':
-        aPoints = 50;
-        break;
-      case 'Resolved Production Issue':
-        aPoints = 50;
-        break;
-      case 'Attended Meetup':
-        aPoints = 20;
-        break;
-      default:
-        aPoints = 0;
+    try {
+      // using the firestore library to generate the id values here
+      const idSaved = this.db.createId(this.afAuth.auth.currentUser.uid);
+
+      // this could potentially become an enum later
+      let aPoints = 0;
+      switch (this.createForm.controls.activity.value) {
+        case 'Read Article':
+          aPoints = 10;
+          break;
+        case 'Wrote Blog Post':
+          aPoints = 50;
+          break;
+        case 'Listened to Podcast':
+          aPoints = 10;
+          break;
+        case 'Watched Video':
+          aPoints = 10;
+          break;
+        case 'Attended Lecture':
+          aPoints = 20;
+          break;
+        case 'Built Hello World App':
+          aPoints = 50;
+          break;
+        case 'Resolved Production Issue':
+          aPoints = 50;
+          break;
+        case 'Attended Meetup':
+          aPoints = 20;
+          break;
+        default:
+          aPoints = 0;
+      }
+
+      const activity: Activity = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        uid: this.afAuth.auth.currentUser.uid,
+        activity: this.createForm.controls.activity.value,
+        description: this.createForm.controls.description.value,
+        link: this.createForm.controls.link.value,
+        points: aPoints,
+        id: idSaved,
+        cleared: false,
+        recorded: Date.now()
+      };
+
+      await this.db.createActivity(activity);
+
+      // update the score in the users table
+      this.score = this.score + aPoints;
+      const userUpdate: User = {
+        uid: this.afAuth.auth.currentUser.uid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        score: this.score,
+        admin: this.admin
+      };
+
+      // call API to update user information
+      await this.db.updateUser(userUpdate);
+
+      this.infoPopup('activity was created successfully');
+      this.router.navigateByUrl('/content');
+    } catch (error) {
+      return this.errorPopup(error.message);
     }
-
-    const savedActivity = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      uid: this.afAuth.auth.currentUser.uid,
-      activity: this.createForm.controls.activity.value,
-      description: this.createForm.controls.description.value,
-      link: this.createForm.controls.link.value,
-      points: aPoints,
-      id: idSaved,
-      cleared: false,
-      recorded: Date.now()
-    };
-
-    // save to the activity table for display
-    await this.afs.collection('teamActivity').doc(idSaved).set(savedActivity)
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
-
-    // update the score in the users table
-    this.score = this.score + aPoints;
-    const userUpdate = {
-      uid: this.afAuth.auth.currentUser.uid,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      score: this.score,
-      admin: this.admin
-    };
-    await this.afs.collection('users').doc(this.afAuth.auth.currentUser.uid).set(userUpdate)
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
-
-    this.infoPopup('activity was created successfully');
-    this.router.navigateByUrl('/content');
   }
 
   cancel() {

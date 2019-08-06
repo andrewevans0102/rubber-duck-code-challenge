@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
-import { PopupService } from 'src/app/services/popup.service';
+import { PopupService } from 'src/app/services/popup/popup.service';
 import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { User } from 'src/app/models/user/user';
 
 @Component({
   selector: 'app-register-user',
@@ -24,7 +25,7 @@ export class RegisterUserComponent implements OnInit {
   popupModalData: PopupModalData;
 
   constructor(
-    public afs: AngularFirestore,
+    public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
     public popupService: PopupService) { }
@@ -46,35 +47,35 @@ export class RegisterUserComponent implements OnInit {
       .then(() => {
           // save the user and the names to the users table for reference
           // since the user is already signed in its ok to us the currentUser uid value here
-          const userItem = {
+          const user: User = {
             uid: this.afAuth.auth.currentUser.uid,
             firstName: this.createForm.controls.firstName.value,
             lastName: this.createForm.controls.lastName.value,
             score: 0,
             admin: false
           };
-          this.addUserToUsersTable(userItem);
+          this.addUserToUsersTable(user);
       })
       .catch((error => {
         return this.errorPopup(error.message);
       }));
   }
 
-  async addUserToUsersTable(userItem: any) {
+  async addUserToUsersTable(user: User) {
     // save the user and the names to the users table for reference
     // since the user is already signed in its ok to us the currentUser uid value here
-    await this.afs.collection('users').doc(this.afAuth.auth.currentUser.uid).set(userItem)
-      .then((documentSnapshot) => {
-        const message = 'user was successfully created, you will now be logged in';
-        const linkHref = environment.joinSlack;
-        const linkText = 'click here to join the slack channel';
-        this.createPopup(message, linkHref, linkText);
-        this.router.navigateByUrl('/content');
-      })
-      .catch((error) => {
-        this.errorPopup(error.message);
-        return this.router.navigateByUrl('/home');
-      });
+    try {
+      await this.db.createUser(user);
+
+      const message = 'user was successfully created, you will now be logged in';
+      const linkHref = environment.joinSlack;
+      const linkText = 'click here to join the slack channel';
+      this.createPopup(message, linkHref, linkText);
+      this.router.navigateByUrl('/content');
+    } catch (error) {
+      this.errorPopup(error.message);
+      return this.router.navigateByUrl('/home');
+    }
   }
 
   login() {

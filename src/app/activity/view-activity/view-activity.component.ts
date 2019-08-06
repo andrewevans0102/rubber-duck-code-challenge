@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { PopupService } from 'src/app/services/popup.service';
+import { PopupService } from 'src/app/services/popup/popup.service';
 import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data';
-import * as firebase from 'firebase';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { User } from 'src/app/models/user/user';
 
 @Component({
   selector: 'app-view-activity',
@@ -14,46 +13,27 @@ import * as firebase from 'firebase';
 })
 export class ViewActivityComponent implements OnInit {
 
-  // teamActivity: Observable<any[]>;
-  teamActivity = [];
-  user: any;
+  activity = [];
+  user: User;
 
   constructor(
-    public afs: AngularFirestore,
+    public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
     public popupService: PopupService) { }
 
   ngOnInit() {
     this.selectActivity();
+    this.selectUser(this.afAuth.auth.currentUser.uid);
+  }
+
+  async selectUser(uid: string) {
+    this.user = await this.db.readUser(uid);
   }
 
   async selectActivity() {
-    this.teamActivity = [];
-    await this.afs.collection('teamActivity').ref.get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const activity = {
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-            uid: doc.data().uid,
-            activity: doc.data().activity,
-            description: doc.data().description,
-            link: doc.data().link,
-            points: doc.data().points,
-            id: doc.data().id,
-            cleared: doc.data().cleared,
-            recorded: doc.data().recorded
-          };
-          this.teamActivity.push(activity);
-        });
-      })
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
-
-    // tslint:disable-next-line:only-arrow-functions
-    this.teamActivity.sort(function(a, b) {
+    this.activity = await this.db.readActivity();
+    this.activity.sort((a, b) => {
       const aDate: any = new Date(a.recorded);
       const bDate: any = new Date(b.recorded);
       // https://stackoverflow.com/questions/10123953/sort-javascript-object-array-by-date
@@ -61,33 +41,25 @@ export class ViewActivityComponent implements OnInit {
     });
   }
 
-  // async is not necessary here, but using it to control event loop
   async deleteItem(activity: any) {
-    await this.afs.collection('teamActivity').doc(activity.id).delete()
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
+    try {
+      // delete the activity
+      await this.db.deleteActivity(activity.id);
 
-    // select the user to get their score
-    let user = null;
-    await this.afs.collection('users').ref.doc(this.afAuth.auth.currentUser.uid).get()
-      .then((documentSnapshot) => {
-        // score = documentSnapshot.data().score;
-        user = documentSnapshot.data();
-      })
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
+      // update score
+      this.user.score = this.user.score - activity.points;
 
-    // update score and then save new value
-    user.score = user.score - activity.points;
-    await this.afs.collection('users').ref.doc(this.afAuth.auth.currentUser.uid).set(user)
-      .catch((error) => {
-        return this.errorPopup(error.message);
-      });
+      // update value
+      await this.db.updateUser(this.user);
 
-    this.selectActivity();
-    this.infoPopup('activity was deleted successfully');
+      // select activity again to clear the board, this could be more efficient
+      this.selectActivity();
+
+      // show popup that activity was deleted successfully
+      this.infoPopup('activity was deleted successfully');
+    } catch (error) {
+      return this.errorPopup(error.message);
+    }
   }
 
   goBack() {

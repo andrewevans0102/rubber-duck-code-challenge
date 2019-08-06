@@ -20,7 +20,7 @@ Rubber Duck image is [from here](https://www.iconfinder.com/icons/416395/bath_ba
 ## npm Scripts
 - `prod-deploy` deploys frontend and functions to Firebase
 - `staged-commit` sets environment values beofre making project commit
-- `deploy-commit` pulls in production values for development work
+- `setup-environment` pulls in production values for development work
 - `functions-install` does the standard `npm install` for functions
 - `docs-build` builds the project docs
 - `docs-deploy` deploys the project docs to repo's GitHub Pages site

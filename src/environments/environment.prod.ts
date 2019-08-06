@@ -9,6 +9,10 @@ export const environment = {
       storageBucket: '',
       messagingSenderId: ''
     },
-    highScores: '',
+    highScoreSlackAPI: '',
+    highScoreAPI: '',
+    userAPI: '',
+    activityAPI: '',
+    // tslint:disable-next-line:max-line-length
     joinSlack: ''
   };
