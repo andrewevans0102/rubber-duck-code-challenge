@@ -47,7 +47,6 @@ export class ContentComponent implements OnInit {
   async selectUser(uid: string) {
     try {
       const response = await this.db.readUser(uid);
-      console.log(response);
       this.firstName = response.firstName;
       this.lastName = response.lastName;
       this.admin = response.admin;
@@ -129,7 +128,6 @@ export class ContentComponent implements OnInit {
 
       // retrieve high scores to get value for id here
       const previousScores: any = await this.db.readHighScores();
-      console.log(previousScores);
 
       // save off top three scores
       const d = new Date();
@@ -189,7 +187,6 @@ export class ContentComponent implements OnInit {
       this.showSpinner = false;
       this.infoPopup('scores have been cleared successfully');
     } catch (error) {
-      console.log(error);
       this.showSpinner = false;
       return this.errorPopup(error.message);
     }

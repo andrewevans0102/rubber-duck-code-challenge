@@ -29,7 +29,6 @@ export class DatabaseService {
     try {
       const response = await fetch(environment.userAPI + '/' + uid);
       const responseJSON = await response.json();
-      console.log(responseJSON);
       return responseJSON;
     } catch (error) {
       throw error;

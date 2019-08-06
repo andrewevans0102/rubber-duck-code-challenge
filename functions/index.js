@@ -92,7 +92,6 @@ app.get('/api/user', (req, res) => {
           await query.get().then(querySnapshot => {
               let docs = querySnapshot.docs;
               for (let doc of docs) {
-                  console.log(doc.data());
                   const selectedUser = {
                       uid: doc.data().uid,
                       firstName: doc.data().firstName,
@@ -159,10 +158,14 @@ app.get('/api/activity', (req, res) => {
                       link: doc.data().link,
                       points: doc.data().points,
                       id: doc.data().id,
-                      cleared: true
+                      cleared: doc.data().cleared,
+                      recorded: doc.data().recorded
                   };
                   selectedActivities.push(selectedActivity);
               }
+              selectedActivities.sort((a,b) => {
+                return b.recorded - a.recorded;
+              });
               return selectedActivities;
           });
           return res.status(200).send(selectedActivities);
@@ -205,8 +208,7 @@ app.delete('/api/activity/:id', (req, res) => {
 app.post('/api/high_score', (req, res) => {
   (async () => {
       try {
-        console.log(req.body);
-          const toot = await db.collection('high_score').doc('/' + req.body.id + '/').create(req.body);
+          await db.collection('high_score').doc('/' + req.body.id + '/').create(req.body);
           return res.status(200).send();
       } catch (error) {
           console.log(error);

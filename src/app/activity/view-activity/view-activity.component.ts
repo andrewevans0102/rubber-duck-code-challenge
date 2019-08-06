@@ -13,7 +13,7 @@ import { User } from 'src/app/models/user/user';
 })
 export class ViewActivityComponent implements OnInit {
 
-  activity = [];
+  activitySelected = [];
   user: User;
 
   constructor(
@@ -23,8 +23,14 @@ export class ViewActivityComponent implements OnInit {
     public popupService: PopupService) { }
 
   ngOnInit() {
-    this.selectActivity();
-    this.selectUser(this.afAuth.auth.currentUser.uid);
+    this.afAuth.auth.onAuthStateChanged(firebaseUser => {
+      if (firebaseUser) {
+        this.selectUser(firebaseUser.uid);
+        this.selectActivity();
+      } else {
+        this.router.navigateByUrl('/home');
+      }
+    });
   }
 
   async selectUser(uid: string) {
@@ -32,13 +38,7 @@ export class ViewActivityComponent implements OnInit {
   }
 
   async selectActivity() {
-    this.activity = await this.db.readActivity();
-    this.activity.sort((a, b) => {
-      const aDate: any = new Date(a.recorded);
-      const bDate: any = new Date(b.recorded);
-      // https://stackoverflow.com/questions/10123953/sort-javascript-object-array-by-date
-      return bDate - aDate;
-    });
+    this.activitySelected = await this.db.readActivity();
   }
 
   async deleteItem(activity: any) {

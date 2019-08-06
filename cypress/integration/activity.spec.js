@@ -6,6 +6,7 @@ describe('activity create, view, and delete e2e test', function () {
       cy.get('#email').type(Cypress.env('cypress-email'));
       cy.get('#password').type(Cypress.env('cypress-password'), { log: false });
       cy.get('#login-button > .mat-button-wrapper').click();
+      cy.wait(500);
       cy.get('#welcome-title').should('contain', 'Welcome Rey!');
       cy.get('#rdcc-toolbar').click();
       cy.get('.mat-menu-content > :nth-child(1) > span').click();
@@ -19,6 +20,7 @@ describe('activity create, view, and delete e2e test', function () {
       cy.get('#welcome-title').should('contain', 'Welcome Rey!');
       cy.get('#rdcc-toolbar').click();
       cy.get('#view-activity').click();
+      cy.wait(500);
       cy.get(':nth-child(1) > :nth-child(6) > .btn').click();
       cy.get('#info-message').should('contain', 'activity was deleted successfully');
     })
