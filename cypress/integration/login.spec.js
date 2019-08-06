@@ -6,7 +6,7 @@ describe('login user e2e test', function () {
       cy.get('#email').type(Cypress.env('cypress-email'));
       cy.get('#password').type(Cypress.env('cypress-password'), { log: false });
       cy.get('#login-button > .mat-button-wrapper').click();
-      cy.get('#welcome-title').should('contain', 'Welcome Rey!');
+      cy.get('#welcome-title').should('contain', 'Welcome');
     })
   })
 });
