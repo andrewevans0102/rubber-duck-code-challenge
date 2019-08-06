@@ -14,7 +14,7 @@ jobs:
                 command: pwd
             - run:
                 name: deploy script
-                command: npm run deploy-commit
+                command: npm run setup-environment
             - restore_cache:
                 keys:
                     - v1-dependencies-{{ checksum "package.json" }}
