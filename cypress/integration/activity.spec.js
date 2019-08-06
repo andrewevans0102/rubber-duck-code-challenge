@@ -6,7 +6,7 @@ describe('activity create, view, and delete e2e test', function () {
       cy.get('#email').type(Cypress.env('cypress-email'));
       cy.get('#password').type(Cypress.env('cypress-password'), { log: false });
       cy.get('#login-button > .mat-button-wrapper').click();
-      cy.get('#welcome-title').should('contain', 'Welcome');
+      cy.get('#welcome-title').should('contain', 'Welcome Rey!');
       cy.get('#rdcc-toolbar').click();
       cy.get('.mat-menu-content > :nth-child(1) > span').click();
       cy.get('.mat-select-arrow-wrapper').click();
