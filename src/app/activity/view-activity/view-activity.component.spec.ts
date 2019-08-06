@@ -12,11 +12,9 @@ describe('ViewActivityComponent', () => {
 
   // stub for the instance of the AngularFireAuth class
   const fireAuthStub = {
-    auth: {
-      currentUser: {
-        uid: '1234'
-      }
-    },
+    auth: jasmine.createSpyObj('auth', {
+      onAuthStateChanged: of('1234')
+    }),
     authState: of('1234')
   };
 
