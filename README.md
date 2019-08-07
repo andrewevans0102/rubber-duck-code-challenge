@@ -45,6 +45,7 @@ Rubber Duck image is [from here](https://www.iconfinder.com/icons/416395/bath_ba
 ## Project Folders
 - `functions` contains the Firebase functions
 - `scripts` contains build scripts for development
+- `postman` contains a postman collection for running with `localhost` and `deployed` versions of the API
 
 ## Angular Folders
 - application is divided by functionality
@@ -77,5 +78,5 @@ There are links to join the slack org available inside the application once you 
 ## Outstanding Tasks
 - increase unit test coverage (Karma)
 - improve documentation
-- refactor some of the components Firebase calls into a service
-- improve different views for more platforms
+- refact to add more models
+- refactor API to have consistent handling of promises and requests

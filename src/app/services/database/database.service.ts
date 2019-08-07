@@ -109,7 +109,7 @@ export class DatabaseService {
     }
   }
 
-  deleteActivity(activity: Activity) {
+  async deleteActivity(activity: Activity) {
     try {
       return fetch(environment.activityAPI + '/' + activity.id, {
         method: 'DELETE',

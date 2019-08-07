@@ -17,6 +17,7 @@ describe('activity create, view, and delete e2e test', function () {
       cy.get('.mat-primary > .mat-button-wrapper').click();
       cy.get('.info').should('contain', 'activity was created successfully');
       cy.get('#closeButton').click();
+      cy.wait(500);
       cy.get('#welcome-title').should('contain', 'Welcome Rey!');
       cy.get('#rdcc-toolbar').click();
       cy.get('#view-activity').click();

@@ -5,6 +5,7 @@ import { PopupService } from 'src/app/services/popup/popup.service';
 import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data';
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { User } from 'src/app/models/user/user';
+import { Activity } from 'src/app/models/activity/activity';
 
 @Component({
   selector: 'app-view-activity',
@@ -38,13 +39,15 @@ export class ViewActivityComponent implements OnInit {
   }
 
   async selectActivity() {
+    this.activitySelected = [];
     this.activitySelected = await this.db.readActivity();
   }
 
-  async deleteItem(activity: any) {
+  async deleteItem(activity: Activity) {
     try {
+      console.log(activity);
       // delete the activity
-      await this.db.deleteActivity(activity.id);
+      await this.db.deleteActivity(activity);
 
       // update score
       this.user.score = this.user.score - activity.points;

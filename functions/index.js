@@ -115,8 +115,7 @@ app.get('/api/user', (req, res) => {
 app.put('/api/user/:uid', (req, res) => {
   (async () => {
       try {
-          const document = db.collection('user').doc(req.params.uid);
-          await document.update(req.body);
+          await db.collection('user').doc(req.params.uid).update(req.body);
           return res.status(200).send();
       } catch (error) {
           console.log(error);
@@ -180,8 +179,7 @@ app.get('/api/activity', (req, res) => {
 app.put('/api/activity/:id', (req, res) => {
   (async () => {
       try {
-          const document = db.collection('activity').doc(req.params.id);
-          await document.update(req.body);
+          await db.collection('activity').doc(req.params.id).update(req.body);
           return res.status(200).send();
       } catch (error) {
           console.log(error);
@@ -194,8 +192,7 @@ app.put('/api/activity/:id', (req, res) => {
 app.delete('/api/activity/:id', (req, res) => {
   (async () => {
       try {
-          const document = db.collection('activity').doc(req.params.id);
-          await document.delete();
+          await db.collection('activity').doc(req.params.id).delete();
           return res.status(200).send();
       } catch (error) {
           console.log(error);

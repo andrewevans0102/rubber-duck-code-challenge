@@ -1,0 +1,745 @@
+{
+	"info": {
+		"_postman_id": "b059e24c-256d-453e-999f-255bf18d975e",
+		"name": "Rubber Duck Code Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n\t\"uid\": \"1234\",\n\t\"firstName\": \"Goose\",\n\t\"lastName\": \"Evans\",\n\t\"score\": 50,\n\t\"admin\": false\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create high_score",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1234\",\n\t\"scoreTitle\": \"first scores\",\n\t\"firstPlace\": {\n\t\t\"place\": 1,\n        \"firstName\": \"Goose\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 100\n\t},\n\t\"secondPlace\": {\n\t\t\"place\": 2,\n        \"firstName\": \"Chessie\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 80\n\t},\n\t\"thirdPlace\": {\n\t\t\"place\": 3,\n        \"firstName\": \"ReyRey\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 20\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/high_score",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"high_score"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n\t\"uid\": \"1234\",\n\t\"firstName\": \"Goose\",\n\t\"lastName\": \"Evans\",\n\t\"score\": 100,\n\t\"admin\": false\n  }"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/user/1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"user",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read user by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/user/Q2DJB8nwVtP4dPCYsSqAEjWLjCE3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"user",
+								"Q2DJB8nwVtP4dPCYsSqAEjWLjCE3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update activity",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n\t\"firstName\": \"Goose\",\n    \"lastName\": \"Evans\",\n    \"uid\": \"1234\",\n    \"activity\": \"eat lunch\",\n    \"description\": \"went to Panera Bread with booboo\",\n    \"link\": \"https://www.panerabread.com/en-us/home.html\",\n    \"points\": 100,\n    \"id\": \"1234\",\n    \"cleared\": false,\n    \"recorded\": 1564943135001\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/activity/1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"activity",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete activity",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n\t\"firstName\": \"Goose\",\n    \"lastName\": \"Evans\",\n    \"uid\": \"1234\",\n    \"activity\": \"eat lunch\",\n    \"description\": \"went to Panera Bread with booboo\",\n    \"link\": \"https://www.panerabread.com/en-us/home.html\",\n    \"points\": 100,\n    \"id\": \"1234\",\n    \"cleared\": false,\n    \"recorded\": 1564943135001\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/activity/1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"activity",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create activity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n\t\"firstName\": \"Goose\",\n    \"lastName\": \"Evans\",\n    \"uid\": \"1234\",\n    \"activity\": \"eat lunch\",\n    \"description\": \"went to Panera Bread\",\n    \"link\": \"https://www.panerabread.com/en-us/home.html\",\n    \"points\": 100,\n    \"id\": \"12345\",\n    \"cleared\": false,\n    \"recorded\": 1564943135001\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/activity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read activity",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/activity",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read high_score",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/rubber-duck-code-challenge/us-central1/app/api/high_score",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"rubber-duck-code-challenge",
+								"us-central1",
+								"app",
+								"api",
+								"high_score"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "deployed",
+			"item": [
+				{
+					"name": "slack send high score",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"message\": \"high score\"\n}"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/slack/high_score",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"slack",
+								"high_score"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n\t\"uid\": \"1234\",\n\t\"firstName\": \"Goose\",\n\t\"lastName\": \"Evans\",\n\t\"score\": 50,\n\t\"admin\": false\n  }"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/user",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user read by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/user/1234",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"user",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user read all documents",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/user",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n\t\"uid\": \"1234\",\n\t\"firstName\": \"Goose\",\n\t\"lastName\": \"Evans\",\n\t\"score\": 100,\n\t\"admin\": false\n  }"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/user/1234",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"user",
+								"1234"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activity create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n\t\"firstName\": \"Goose\",\n    \"lastName\": \"Evans\",\n    \"uid\": \"1234\",\n    \"activity\": \"eat lunch\",\n    \"description\": \"went to Panera Bread\",\n    \"link\": \"https://www.panerabread.com/en-us/home.html\",\n    \"points\": 100,\n    \"id\": \"12345\",\n    \"cleared\": false,\n    \"recorded\": 1564943135001\n}"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/activity",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activity read",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/activity",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activity update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{        \n\t\"firstName\": \"Goose\",\n    \"lastName\": \"Evans\",\n    \"uid\": \"1234\",\n    \"activity\": \"eat lunch\",\n    \"description\": \"went to Panera Bread with an update!\",\n    \"link\": \"https://www.panerabread.com/en-us/home.html\",\n    \"points\": 100,\n    \"id\": \"12345\",\n    \"cleared\": false,\n    \"recorded\": 1564943135001\n}"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/activity/12345",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"activity",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activity delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/activity/1565191128579_cC5ib6JHF7bMCiv67KfKdzejeUD2",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"activity",
+								"1565191128579_cC5ib6JHF7bMCiv67KfKdzejeUD2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "high_score create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"1234\",\n\t\"scoreTitle\": \"first scores\",\n\t\"firstPlace\": {\n\t\t\"place\": 1,\n        \"firstName\": \"Goose\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 100\n\t},\n\t\"secondPlace\": {\n\t\t\"place\": 2,\n        \"firstName\": \"Chessie\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 80\n\t},\n\t\"thirdPlace\": {\n\t\t\"place\": 3,\n        \"firstName\": \"ReyRey\",\n        \"lastName\": \"Evans\",\n    \t\"score\": 20\n\t}\n}"
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/high_score",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"high_score"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "high_score read",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://us-central1-rubber-duck-code-challenge.cloudfunctions.net/app/api/high_score",
+							"protocol": "https",
+							"host": [
+								"us-central1-rubber-duck-code-challenge",
+								"cloudfunctions",
+								"net"
+							],
+							"path": [
+								"app",
+								"api",
+								"high_score"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
