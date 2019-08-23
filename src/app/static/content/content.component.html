@@ -45,25 +45,29 @@
     </mat-menu>
   </span>
 </mat-toolbar>
+<div *ngIf="error$ | async as error">
+  <h1 class="error-message"><mat-icon>error</mat-icon> {{ error }}</h1>
+</div>
+<div *ngIf="user$ | async as user">
+  <h1>Welcome {{ user.firstName }}!</h1>
+</div>
 <div class="top-page">
-  <img src="../../../assets/rubber_duck.png" class="rubber-duck">
-  <h1 *ngIf="firstName !== undefined" id="welcome-title">Welcome {{ firstName }}!</h1>
   <img src="../../../assets/rubber_duck.png" class="rubber-duck">
 </div>
 <table class="table table-dark" *ngIf="showSpinner === false">
   <thead>
     <tr>
       <th scope="col">Place</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
+      <th scope="col" class="name">First Name</th>
+      <th scope="col" class="name">Last Name</th>
       <th scope="col">Score</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let userScore of scores">
       <td>{{ userScore.place }}</td>
-      <td>{{ userScore.firstName }}</td>
-      <td>{{ userScore.lastName }}</td>
+      <td class="name">{{ userScore.firstName }}</td>
+      <td class="name">{{ userScore.lastName }}</td>
       <td>{{ userScore.score }}</td>
     </tr>
   </tbody>

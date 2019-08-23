@@ -47,6 +47,11 @@ th {
   text-align: center;
 }
 
+.name {
+  width: 25%;
+  overflow-wrap: break-word;
+}
+
 .top-page {
   display: flex;
   justify-content: center;
@@ -100,4 +105,11 @@ button {
   justify-content: center;
   align-items: center;
   color: gold;
+}
+
+.error-message{
+  background: red;
+  color: white;
+  font-size: 2em;
+  text-align: center;
 }

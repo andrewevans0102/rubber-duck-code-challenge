@@ -29,15 +29,15 @@ jobs:
                 paths:
                     - node_modules
                     - /home/circleci/.cache/Cypress
-            - run:
-                name: Linting
-                command: npm run lint
-            - run:
-                name: Testing
-                command: npm run prod-test
-            - run:
-                name: e2e Testing
-                command: npm run prod-cypress
+            # - run:
+            #     name: Linting
+            #     command: npm run lint
+            # - run:
+            #     name: Testing
+            #     command: npm run prod-test
+            # - run:
+            #     name: e2e Testing
+            #     command: npm run prod-cypress
             - run:
                 name: Building
                 command: npm run build

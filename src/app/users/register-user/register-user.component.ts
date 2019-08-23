@@ -7,6 +7,9 @@ import { PopupService } from 'src/app/services/popup/popup.service';
 import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data';
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { User } from 'src/app/models/user/user';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { LoadLogin } from 'src/app/actions/login.actions';
 
 @Component({
   selector: 'app-register-user',
@@ -28,7 +31,8 @@ export class RegisterUserComponent implements OnInit {
     public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
-    public popupService: PopupService) { }
+    public popupService: PopupService,
+    public store: Store<AppState>) { }
 
   ngOnInit() {
   }
@@ -44,7 +48,7 @@ export class RegisterUserComponent implements OnInit {
     // on success this will also sign in this user to the current session
     await this.afAuth.auth.createUserWithEmailAndPassword(this.createForm.controls.email.value,
       this.createForm.controls.password.value)
-      .then(() => {
+      .then(async () => {
           // save the user and the names to the users table for reference
           // since the user is already signed in its ok to us the currentUser uid value here
           const user: User = {
@@ -54,38 +58,21 @@ export class RegisterUserComponent implements OnInit {
             score: 0,
             admin: false
           };
-          this.addUserToUsersTable(user);
+
+          await this.db.createUser(user);
+          const message = 'user was successfully created, you will now be logged in';
+          const linkHref = environment.joinSlack;
+          const linkText = 'click here to join the slack channel';
+          this.createPopup(message, linkHref, linkText);
+
+          // send action to update store
+          this.store.dispatch(new LoadLogin({uid: this.afAuth.auth.currentUser.uid}));
+
+          this.router.navigateByUrl('/content');
       })
       .catch((error => {
-        return this.errorPopup(error.message);
-      }));
-  }
-
-  async addUserToUsersTable(user: User) {
-    // save the user and the names to the users table for reference
-    // since the user is already signed in its ok to us the currentUser uid value here
-    try {
-      await this.db.createUser(user);
-
-      const message = 'user was successfully created, you will now be logged in';
-      const linkHref = environment.joinSlack;
-      const linkText = 'click here to join the slack channel';
-      this.createPopup(message, linkHref, linkText);
-      this.router.navigateByUrl('/content');
-    } catch (error) {
-      this.errorPopup(error.message);
-      return this.router.navigateByUrl('/home');
-    }
-  }
-
-  login() {
-    this.afAuth.auth.signInWithEmailAndPassword(this.createForm.controls.email.value,
-      this.createForm.controls.password.value)
-      .then(() => {
-        this.router.navigateByUrl('/home');
-      })
-      .catch((error => {
-        return this.errorPopup(error.message);
+        this.errorPopup(error.message);
+        return;
       }));
   }
 

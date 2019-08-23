@@ -3,6 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { PopupService } from 'src/app/services/popup/popup.service';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { LoadLogin } from 'src/app/actions/login.actions';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public afAuth: AngularFireAuth,
     public router: Router,
-    public popupService: PopupService) { }
+    public popupService: PopupService,
+    private store: Store<AppState>) { }
 
   ngOnInit() {
   }
@@ -28,11 +32,14 @@ export class LoginComponent implements OnInit {
   async login() {
     await this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.controls.email.value,
       this.loginForm.controls.password.value)
+      .then((response) => {
+        this.store.dispatch(new LoadLogin({uid: this.afAuth.auth.currentUser.uid}));
+        this.router.navigateByUrl('/content');
+      })
       .catch((error) => {
-        return this.errorPopup(error.message);
+        this.errorPopup(error.message);
+        return;
       });
-
-    this.router.navigateByUrl('/content');
   }
 
   getEmailErrorMessage() {

@@ -6,6 +6,11 @@ import { PopupModalData } from 'src/app/models/popup-modal-data/popup-modal-data
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { User } from 'src/app/models/user/user';
 import { Activity } from 'src/app/models/activity/activity';
+import { Observable, Subject } from 'rxjs';
+import { AppState, selectUser, selectError } from 'src/app/reducers';
+import { takeUntil, catchError } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { UpdateLogin } from 'src/app/actions/login.actions';
 
 @Component({
   selector: 'app-view-activity',
@@ -16,26 +21,26 @@ export class ViewActivityComponent implements OnInit {
 
   activitySelected = [];
   user: User;
+  user$: Observable<any>;
+  unsubscribe = new Subject();
 
   constructor(
     public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
-    public popupService: PopupService) { }
+    public popupService: PopupService,
+    public store: Store<AppState>) { }
 
   ngOnInit() {
-    this.afAuth.auth.onAuthStateChanged(firebaseUser => {
-      if (firebaseUser) {
-        this.selectUser(firebaseUser.uid);
-        this.selectActivity();
-      } else {
-        this.router.navigateByUrl('/home');
-      }
-    });
-  }
+    this.store.pipe(
+      takeUntil(this.unsubscribe),
+      catchError((error) => {
+        throw error;
+      })
+    )
+    .subscribe(state => this.user = state.login.user);
 
-  async selectUser(uid: string) {
-    this.user = await this.db.readUser(uid);
+    this.selectActivity();
   }
 
   async selectActivity() {
@@ -45,7 +50,6 @@ export class ViewActivityComponent implements OnInit {
 
   async deleteItem(activity: Activity) {
     try {
-      console.log(activity);
       // delete the activity
       await this.db.deleteActivity(activity);
 
@@ -54,6 +58,9 @@ export class ViewActivityComponent implements OnInit {
 
       // update value
       await this.db.updateUser(this.user);
+
+      // update the store with a dispatched action
+      this.store.dispatch(new UpdateLogin({user: this.user}));
 
       // select activity again to clear the board, this could be more efficient
       this.selectActivity();

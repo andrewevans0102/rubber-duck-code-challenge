@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
@@ -10,13 +10,17 @@ import { User } from 'src/app/models/user/user';
 import { Activity } from 'src/app/models/activity/activity';
 import { Score } from 'src/app/models/score/score';
 import { HighScore } from 'src/app/models/high-score/high-score';
+import { Observable, Subject } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { AppState, selectUser, selectError } from 'src/app/reducers';
+import { takeUntil, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
 
   activityDisplay = [];
   firstName: string;
@@ -25,34 +29,46 @@ export class ContentComponent implements OnInit {
   admin: boolean;
   showSpinner = false;
   joinSlack = environment.joinSlack;
+  user$: Observable<any>;
+  user: User;
+  unsubscribe = new Subject();
+  error$: Observable<any>;
 
   constructor(
     public db: DatabaseService,
     public afAuth: AngularFireAuth,
     public router: Router,
-    public popupService: PopupService) { }
+    public popupService: PopupService,
+    private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.afAuth.auth.onAuthStateChanged(firebaseUser => {
-      if (firebaseUser) {
-        this.selectUser(firebaseUser.uid);
-      } else {
-        this.router.navigateByUrl('/home');
-      }
-    });
+    // access the value directly here
+    //
+    // this.store.pipe(takeUntil(this.unsubscribe))
+    //   .subscribe(state => this.user = state.login.user);
+
+    this.user$ = this.store.pipe(
+      takeUntil(this.unsubscribe),
+      select(selectUser),
+      catchError((error) => {
+        throw error;
+      })
+    );
+
+    this.error$ = this.store.pipe(
+      takeUntil(this.unsubscribe),
+      select(selectError),
+      catchError((error) => {
+        throw error;
+      })
+    );
 
     this.selectScores();
   }
 
-  async selectUser(uid: string) {
-    try {
-      const response = await this.db.readUser(uid);
-      this.firstName = response.firstName;
-      this.lastName = response.lastName;
-      this.admin = response.admin;
-    } catch (error) {
-      return this.errorPopup(error.message);
-    }
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   createActivity() {

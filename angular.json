@@ -121,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rubber-duck-code-challenge"
+    }
+  },
+  "defaultProject": "rubber-duck-code-challenge",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
