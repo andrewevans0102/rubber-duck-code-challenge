@@ -28,8 +28,7 @@ export class DatabaseService {
   async readUser(uid: string) {
     try {
       const response = await fetch(environment.userAPI + '/' + uid);
-      const responseJSON = await response.json();
-      return responseJSON;
+      return response.json();
     } catch (error) {
       throw error;
     }
