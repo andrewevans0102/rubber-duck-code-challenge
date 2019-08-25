@@ -23,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { LoginEffects } from './effects/login.effects';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -48,10 +49,6 @@ import { LoginEffects } from './effects/login.effects';
     AngularFireAuthModule,
     BrowserModule,
     StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
-    }),
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
@@ -60,7 +57,8 @@ import { LoginEffects } from './effects/login.effects';
       }
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([LoginEffects])
+    EffectsModule.forRoot([LoginEffects]),
+    HttpClientModule,
   ],
   providers: [],
   entryComponents: [ PopupModalComponent ],

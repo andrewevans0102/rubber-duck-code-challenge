@@ -3,13 +3,16 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user/user';
 import { PopupService } from '../popup/popup.service';
 import { Activity } from 'src/app/models/activity/activity';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
 
-  constructor(public popupService: PopupService) { }
+  constructor(private http: HttpClient, public popupService: PopupService) { }
 
   createUser(user: User) {
     try {
@@ -25,13 +28,13 @@ export class DatabaseService {
     }
   }
 
-  async readUser(uid: string) {
-    try {
-      const response = await fetch(environment.userAPI + '/' + uid);
-      return response.json();
-    } catch (error) {
-      throw error;
-    }
+  readUser(uid: string): Observable<any> {
+    return this.http.get(environment.userAPI + '/' + uid)
+      .pipe(
+        catchError(err => {
+          return throwError('error when getting user information');
+        })
+      );
   }
 
   updateUser(user: User) {

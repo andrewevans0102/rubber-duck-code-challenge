@@ -18,15 +18,13 @@ export class LoginEffects {
   loadLogin$ = this.actions$
     .pipe(
       ofType<LoadLogin>(LoginActionTypes.LoadLogin),
-      mergeMap((action) =>
-        from(this.databaseService.readUser(action.payload.uid))
+      mergeMap((action: LoadLogin) => this.databaseService.readUser(action.payload.uid)
         .pipe(
-          map(user => {
-            return new UpdateLogin({user});
+          map((userFound: User) => {
+            return new UpdateLogin({user: userFound});
           }),
           catchError((errorMessage) => of(new LoginError({error: errorMessage})))
-        )
-      )
+        ))
   );
 
   constructor(private actions$: Actions, private store: Store<AppState>, private databaseService: DatabaseService) { }
