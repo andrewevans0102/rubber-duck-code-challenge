@@ -48,14 +48,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     BrowserModule,
-    StoreModule.forRoot(reducers),
-    StoreModule.forRoot(reducers, {
-      metaReducers,
-      runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-      }
-    }),
+    StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([LoginEffects]),
     HttpClientModule,
